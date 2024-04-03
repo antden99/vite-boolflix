@@ -14,7 +14,7 @@ export default {
     }
   },
 
- 
+
 
   methods: {
     ritornaParola(str) {
@@ -61,7 +61,7 @@ export default {
     <!--aggiungo l'evento click, che si attiva quando clicco sul bottone e attiva la funzione dichiarata nello state chiamata -->
     <button @click="state.research">Invia</button>
 
-    <ol>
+    <ol class="films">
       <li v-for="film in state.filmsList">
         <div>
           {{ "titolo: " + film.title }}
@@ -73,19 +73,38 @@ export default {
           <!--trasformo la string in maiuscolo, in modo tale che dopo posso inserirla nella ricerca immagine-->
           {{ "lingua originale: " }}
 
-          <img :src="ritornaParola(film.original_language)" alt="">
+          <img :src="ritornaParola(film.original_language)" alt="" class="flag">
         </div>
         <div>
           {{ "voto:" + film.vote_average }}
         </div>
+        <div>
+          <img :src="`https://image.tmdb.org/t/p/w342/${film.poster_path}`" alt="">
+        </div>
       </li>
     </ol>
 
+    <ul>
+      <li v-for="serie in state.seriesList">
+        <div>{{ "titolo della serie: " + serie.name }}</div>
+        <div>{{ "lingua della serie: " + serie.name }}</div>
+        <div>{{ "voto della serie: " + serie.vote_average }}</div>
+        <div><img :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`" alt=""></div>
+      </li>
+
+
+    </ul>
+
   </div>
+
 </template>
 
 <style>
 img {
-  max-width: 40px;
+  max-width: 150px;
+}
+
+.flag{
+  max-width: 35px;
 }
 </style>
