@@ -14,6 +14,8 @@ export const state = reactive({
     //dichiato una proprietà che contiene un array inizialmente vuoto e che andrò a riempire successivamente con la chiamata ajax fatta in research() 
     filmsList: [],
 
+    
+
     //dichiaro il metodo callApifunction che mi permette, tramite la mia chiamata ajax di accedere alla lista dei film
     callApifunction(url) {
         // Restituisco una promessa tramite il return per consentire la gestione asincrona dei dati
@@ -21,7 +23,9 @@ export const state = reactive({
             .get(url)
             .then(response => {
                 this.filmsList = response.data.results;
-                return response.data.results; // Restituisci i dati aggiornati per la gestione successiva
+                
+                // Restituisco i dati aggiornati per la gestione successiva
+                return response.data.results; 
             })
     },
 

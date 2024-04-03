@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       state: state,    //alla proprietà state assegno state, che sarebbe la costante importata
-
+      flag: "",
     }
   },
   //con mounted al caricamento dei dati, prima di essere caricati in pagina, vado a recuperare l'array di oggetti card, tramite il localhost che ho generato nel passaggio precedente con npm run serve(vedi packge.json)
@@ -19,6 +19,15 @@ export default {
     //all'avvio del programma, verrà invocata la funzione callApiFunction che sti trova nel file globale state importato precedentemente
     state.callApifunction(state.address_my_key)
   },
+
+  methods:{
+    ritornaParola(str) {
+      
+    return `https://flagsapi.com/${str.toUpperCase()}/flat/64.png`;
+ 
+  }
+  }
+
 }
 </script>
 
@@ -39,8 +48,11 @@ export default {
         <div>
           {{ "titolo originale:" + film.original_title }}
         </div>
-        <div>
+        <div >
+          <!--trasformo la string in maiuscolo, in modo tale che dopo posso inserirla nella ricerca immagine-->
           {{ "lingua originale:" + film.original_language }}
+          
+          <img :src="ritornaParola(film.original_language)" alt="">
         </div>
         <div>
           {{ "voto:" + film.vote_average }}
@@ -51,4 +63,6 @@ export default {
   </div>
 </template>
 
-<style></style>
+<style>
+
+</style>
