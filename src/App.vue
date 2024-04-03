@@ -15,9 +15,8 @@ export default {
   },
   //con mounted al caricamento dei dati, prima di essere caricati in pagina, vado a recuperare l'array di oggetti card, tramite il localhost che ho generato nel passaggio precedente con npm run serve(vedi packge.json)
   mounted() {
-
     //all'avvio del programma, verrà invocata la funzione callApiFunction che sti trova nel file globale state importato precedentemente
-    state.callApifunction()
+    state.callApifunction(state.address_my_key)
   },
 }
 </script>
@@ -26,8 +25,12 @@ export default {
   <div>
 
     <!--aggiungo l'input ed il button per visualizzarli in pagina per la milestone 1-->
-    <input type="text" placeholder="cerca il tuo film">
-    <button>Invia</button>
+    <input type="text" placeholder="cerca il tuo film" v-model="state.searchMovie" >
+
+    <!--aggiungo l'evento click, che si attiva quando clicco sul bottone e attiva la funzione dichiarata nello state chiamata -->
+    <button @click="state.research">Invia</button>
+
+    
 
 
   </div>
