@@ -27,15 +27,24 @@ export default {
     </header>
 </template>
 
-<style>
+<style scoped>
 header {
     background-color: #080708;
     height: 100px;
     display: flex;
 }
+.container{
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-.left{
-    
+}
+.left {
+
     color: red;
     font-size: 50px;
 }

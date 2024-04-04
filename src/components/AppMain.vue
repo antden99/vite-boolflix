@@ -66,56 +66,81 @@ export default {
 </script>
 
 <template>
-    <ol class="films">
-        <h2>Lista Film</h2>
-        <li v-for="film in state.filmsList">
-            <div>
-                {{ "titolo: " + film.title }}
-            </div>
-            <div>
-                {{ "titolo originale:" + film.original_title }}
-            </div>
-            <div>
-                <!--trasformo la string in maiuscolo, in modo tale che dopo posso inserirla nella ricerca immagine-->
-                {{ "lingua originale: " }}
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col" v-for="film in state.filmsList">
+                    <div class="card">
 
-                <img :src="ritornaParola(film.original_language)" alt="" class="flag">
-            </div>
-            <div>
-                {{ "voto :" }}
-                <span class="star_color" v-for="n in returnNumb(film.vote_average)"><i class="fa fa-star"
-                        aria-hidden="true"></i></span>
-            </div>
-            <div>
-                <img :src="`https://image.tmdb.org/t/p/w342/${film.poster_path}`" alt="">
-            </div>
-        </li>
-    </ol>
+                        <div>
+                            {{ "titolo: " + film.title }}
+                        </div>
+                        <div>
+                            {{ "titolo originale:" + film.original_title }}
+                        </div>
+                        <div>
+                            <!--trasformo la string in maiuscolo, in modo tale che dopo posso inserirla nella ricerca immagine-->
+                            {{ "lingua originale: " }}
 
-    <ul>
-        <h2>Lista Serie Tv</h2>
-        <li v-for="serie in state.seriesList">
-            <div>{{ "titolo della serie: " + serie.name }}</div>
-            <div>{{ "lingua della serie: " + serie.name }}</div>
-            <div>{{ "voto della serie: " }}
-                <span class="star_color" v-for="n in returnNumb(serie.vote_average)"><i class="fa fa-star"
-                        aria-hidden="true"></i></span>
+                            <img :src="ritornaParola(film.original_language)" alt="" class="flag">
+                        </div>
+                        <div>
+                            {{ "voto :" }}
+                            <span class="star_color" v-for="n in returnNumb(film.vote_average)"><i class="fa fa-star"
+                                    aria-hidden="true"></i></span>
+                        </div>
+                        <div>
+                            <img :src="`https://image.tmdb.org/t/p/w342/${film.poster_path}`" alt="">
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
-            <div><img :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`" alt=""></div>
-        </li>
-    </ul>
+        </div>
+    </main>
 </template>
 
-<style>
+<style scoped>
 img {
     max-width: 150px;
 }
 
 .flag {
-    max-width: 35px;
+    max-width: 15px;
 }
 
 .star_color {
     color: gold;
+}
+main{
+    background-color: #141414;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+    
+    padding-top: 20px;
+    
+    & .row {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        
+        & .col {
+            width: calc((100% / 12) * 4 - 15px);
+
+            & .card {
+                background-color: rgb(102, 95, 95);
+                border-radius: 10px;
+                height: 100%;
+                padding-left: 10px;
+            }
+        }
+    }
 }
 </style>

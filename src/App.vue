@@ -3,23 +3,23 @@ import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
 
 export default {
-  name: "AppMain",
 
-  components: {   
+
+  components: {
     AppHeader: AppHeader,
-    AppMain: AppMain,    
+    AppMain: AppMain,
   },
 
 }
 </script>
 
 <template>
-  <div>
 
-    <AppHeader></AppHeader>
-    <AppMain></AppMain>
-    
-  </div>
+
+  <AppHeader></AppHeader>
+  <AppMain></AppMain>
+
+
 </template>
 
 <style>
