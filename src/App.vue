@@ -1,11 +1,13 @@
 <script>
 import { state } from '../src/state.js';
+import AppHeader from './components/AppHeader.vue';
 
 export default {
   name: "AppMain",
 
   components: {
     state: state,
+    AppHeader: AppHeader,
   },
 
   data() {
@@ -13,8 +15,6 @@ export default {
       state: state,    //alla proprietà state assegno state, che sarebbe la costante importata
     }
   },
-
-
 
   methods: {
     ritornaParola(str) {
@@ -58,7 +58,7 @@ export default {
       let intero = (Math.trunc(newNumber)); //il metodo trunc mi permette di troncare la parte decimale e prendere solo il numero intero e lo salvo in numb
 
       const decimale = newNumber - intero
-      console.log("numero originale: " + number + "numero diviso: " + newNumber + "parte intera:" + intero + "parte decimale:" + Number(decimale.toFixed(2)))
+      //console.log("numero originale: " + number + "numero diviso: " + newNumber + "parte intera:" + intero + "parte decimale:" + Number(decimale.toFixed(2)))
 
       if (Number(decimale.toFixed(2)) > 0.5) {
         intero++
@@ -73,17 +73,13 @@ export default {
 }
 </script>
 
-
 <template>
   <div>
 
-    <!--aggiungo l'input ed il button per visualizzarli in pagina per la milestone 1-->
-    <input type="text" placeholder="cerca il tuo film" v-model="state.searchMovie">
-
-    <!--aggiungo l'evento click, che si attiva quando clicco sul bottone e attiva la funzione dichiarata nello state chiamata -->
-    <button @click="state.research">Invia</button>
+    <AppHeader></AppHeader>
 
     <ol class="films">
+      <h2>Lista Film</h2>
       <li v-for="film in state.filmsList">
         <div>
           {{ "titolo: " + film.title }}
@@ -109,6 +105,7 @@ export default {
     </ol>
 
     <ul>
+      <h2>Lista Serie Tv</h2>
       <li v-for="serie in state.seriesList">
         <div>{{ "titolo della serie: " + serie.name }}</div>
         <div>{{ "lingua della serie: " + serie.name }}</div>
@@ -118,12 +115,8 @@ export default {
         </div>
         <div><img :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`" alt=""></div>
       </li>
-
-
     </ul>
-
   </div>
-
 </template>
 
 <style>
