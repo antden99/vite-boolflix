@@ -21,6 +21,7 @@ export const state = reactive({
         return axios
             .get(url)
             .then(response => {
+                console.log(response)
                return response.data.results;
             });
     },
@@ -32,7 +33,7 @@ export const state = reactive({
         // Utilizzo la promessa restituita dalla funzione callApifunction per ottenere la lista di film
         this.callApifunction(`https://api.themoviedb.org/3/search/movie?${this.address_my_key}&query=${this.searchMovie}`)
             .then(films => {
-                
+                console.log(films)
                 this.filmsList = films;           
                 console.log(this.filmsList);
             });

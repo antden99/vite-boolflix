@@ -23,17 +23,19 @@ export default {
     <main>
         <div class="container">
             <div class="row">
-                <AppCard v-for="film in state.filmsList" :card="film"></AppCard>
+                <AppCard v-for="film in state.filmsList" :immagine="film.poster_path" :titolo="film.title"
+                    :titoloOriginale="film.original_title" :lingua="film.original_language" :voto="film.vote_average"
+                    :overview="film.overview"></AppCard>
 
-                <AppCard v-for="serie in state.seriesList" :card="serie"></AppCard>
+                <AppCard v-for="serie in state.seriesList" :immagine="serie.poster_path" :titolo="serie.name"
+                    :titoloOriginale="serie.original_name" :lingua="serie.original_language" :voto="serie.vote_average"
+                    :overview="serie.overview"></AppCard>
             </div>
         </div>
     </main>
 </template>
 
 <style scoped>
-
-
 main {
     background-color: #141414;
     height: calc(100vh - 100px);
@@ -45,15 +47,15 @@ main {
     max-width: 1200px;
     margin: auto;
 
-    padding-top: 20px;
+    padding-top: 25px;
 
     & .row {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
         gap: 15px;
+        justify-content: space-between;
 
-        
     }
 }
 </style>

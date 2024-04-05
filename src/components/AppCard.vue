@@ -1,20 +1,16 @@
 <script>
+import { toDisplayString } from 'vue';
 import { state } from '../state';
 
 export default {
     name: "AppCard",
-
     data() {
         return {
             state: state,
+            over: false,
         }
     },
-
-    props: {
-        card: Object,
-    },
-
-
+    props: ["immagine", "titolo", "titoloOriginale", "lingua", "voto", "overview"],
     methods: {
 
         ritornaParola(str) {
@@ -53,7 +49,6 @@ export default {
         },
 
         returnNumb(number) {
-
             const newNumber = number / 2;
             let intero = (Math.trunc(newNumber)); //il metodo trunc mi permette di troncare la parte decimale e prendere solo il numero intero e lo salvo in numb
 
@@ -65,37 +60,40 @@ export default {
             } else if (number <= 0) {
                 intero = 1
             }
-
             return intero
         }
-
     }
 }
 </script>
 
 <template>
     <div class="col">
-        <div class="card">
-            <p>Lista film</p>
-            <div>
-                {{ "titolo: " + card.title }}
-            </div>
-            <div>
-                {{ "titolo originale:" + card.original_title }}
-            </div>
-            <div>
-                <!--trasformo la string in maiuscolo, in modo tale che dopo posso inserirla nella ricerca immagine-->
-                {{ "lingua originale: " }}
+        <div class="card" @mouseenter="over = true" @mouseout="over = false">
 
-                <img :src="ritornaParola(card.original_language)" alt="" class="flag">
-            </div>
-            <div>
-                {{ "voto :" }}
-                <span class="star_color" v-for="n in returnNumb(card.vote_average)"><i class="fa fa-star"
-                        aria-hidden="true"></i></span>
-            </div>
-            <div>
-                <img :src="`https://image.tmdb.org/t/p/w342/${card.poster_path}`" alt="">
+            <img :src="`https://image.tmdb.org/t/p/w342/${immagine}`" alt="" v-if="over === false">
+
+            <div v-else class="info">
+                <div class="text_color">
+                    <strong>Titolo :</strong> {{ titolo }}
+                </div>
+                <div class="text_color">
+                    <strong>Titolo Originale :</strong> {{ titoloOriginale }}
+                </div>
+                <div class="text_color d_flex">
+
+                    <div class="text_color">
+                        <strong>Lingua originale :</strong> <span><img :src="ritornaParola(lingua)" alt="" class="flag"></span>
+                    </div>
+                </div>
+                <div class="text_color">
+                    <strong>Voto :</strong>
+                    <span class="star_color" v-for="n in returnNumb(voto)"><i class="fa fa-star"
+                            aria-hidden="true"></i></span>
+                </div>
+                <div class="text_color">
+                    <strong>Overview :</strong> {{ overview }}
+
+                </div>
             </div>
 
         </div>
@@ -103,12 +101,9 @@ export default {
 </template>
 
 <style scoped>
-img {
-    max-width: 150px;
-}
-
 .flag {
-    max-width: 15px;
+    max-width: 20px;
+
 }
 
 .star_color {
@@ -117,12 +112,62 @@ img {
 
 .col {
     width: calc((100% / 12) * 4 - 15px);
+    height: 400px;
+
 
     & .card {
-        background-color: rgb(102, 95, 95);
+        background-color: #080708;
         border-radius: 10px;
         height: 100%;
-        padding-left: 10px;
+        box-shadow: 10px 10px 10px rgba(128, 60, 60, 0.1);
     }
 }
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.text_color {
+    color: white;
+}
+
+.d_flex {
+    display: flex;
+    align-items: center;
+}
+
+.info {
+    padding: 20px;
+}
 </style>
+
+<!--<div class="card" :style="{ 'background-image': 'url(\'https://image.tmdb.org/t/p/w342/' + immagine + '\')'}"   @mouseover="this.over=true"  @mouseout="this.over=false" :class="{none : this.over === true}" >
+    <div class="text_color">
+        {{ "titolo: " + titolo }}
+    </div>
+    <div class="text_color">
+        {{ "titolo originale:" + titoloOriginale }}
+    </div>
+    <div class="text_color d_flex">
+        trasformo la string in maiuscolo, in modo tale che dopo posso inserirla nella ricerca immagine
+        <div class="text_color">
+            Lingua originale : <img :src="ritornaParola(lingua)" alt="" class="flag">
+        </div>
+    </div>
+    <div class="text_color">
+        {{ "voto :" }}
+        <span class="star_color" v-for="n in returnNumb(voto)"><i class="fa fa-star"
+                aria-hidden="true"></i></span>
+    </div>
+    <div class="text_color">
+        <div>overview : {{ overview }}</div>
+
+    </div>
+    <div>
+        <img :src="`https://image.tmdb.org/t/p/w342/${card.poster_path}`" alt="">
+    </div>
+
+</div>-->
