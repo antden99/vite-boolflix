@@ -46,9 +46,8 @@ export default {
     <div class="col">
         <div class="card" @mouseenter="over = true" @mouseout="over = false">
 
-            <div class="image" v-if="immagine !== null">
-                <img :src="`https://image.tmdb.org/t/p/w342/${immagine}`" alt="" v-if="over === false">
-                <div v-else class="info">
+            <div class="info" v-if="immagine === null || over === true">
+                <div class="info">
                     <div class="text_color">
                         <strong>Titolo :</strong> {{ titolo }}
                     </div>
@@ -62,9 +61,7 @@ export default {
                                 <img :src="`./src/assets/img/${lingua}.png`" alt="" class="flag">
                             </span>
                             <span v-else> {{ lingua }}</span>
-
                         </div>
-
                     </div>
                     <div class="text_color">
                         <strong>Voto :</strong>
@@ -76,31 +73,9 @@ export default {
                     </div>
                 </div>
             </div>
-            <div v-else class="info">
-                <div class="text_color">
-                    <strong>Titolo :</strong> {{ titolo }}
-                </div>
-                <div class="text_color">
-                    <strong>Titolo Originale :</strong> {{ titoloOriginale }}
-                </div>
-                <div class="text_color d_flex">
-                    <div class="text_color">
-                        <strong :data-lang="lingua">Lingua originale :</strong>
-                        <span v-if="languagePresent(lingua)">
-                            <img :src="`./src/assets/img/${lingua}.png`" alt="" class="flag">
-                        </span>
-                        <span v-else> {{ lingua }}</span>
-                    </div>
-                </div>
-                <div class="text_color">
-                    <strong>Voto :</strong>
-                    <span class="star_color" v-for="n in returnNumb(voto)"><i class="fa fa-star"
-                            aria-hidden="true"></i></span>
-                </div>
-                <div class="text_color">
-                    <strong>Overview :</strong> {{ overview }}
 
-                </div>
+            <div v-else class="image">
+                <img :src="`https://image.tmdb.org/t/p/w342/${immagine}`" alt="">
             </div>
 
         </div>
