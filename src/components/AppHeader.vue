@@ -48,4 +48,8 @@ header {
     color: red;
     font-size: 50px;
 }
+
+input{
+    outline: none;
+}
 </style>
