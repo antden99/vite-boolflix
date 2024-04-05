@@ -8,14 +8,15 @@ export default {
         return {
             state: state,
             over: false,
-            languages: ["it", "en", "es"],
+            languages: ["it", "en", "es", "ja"],
         }
     },
     props: ["immagine", "titolo", "titoloOriginale", "lingua", "voto", "overview"],
     methods: {
 
-        ritornaParola(str) {
-
+        languagePresent(str) {
+            console.log(str);
+            console.log(this.languages.includes(str))
             if (this.languages.includes(str)) {
                 return true;
             } else {
@@ -56,9 +57,9 @@ export default {
                     </div>
                     <div class="text_color d_flex">
                         <div class="text_color">
-                            <strong>Lingua originale :</strong>
-                            <span v-if="ritornaParola(lingua)">
-                                <img :src="`../assets/img/${lingua}.png`" alt="" class="flag">
+                            <strong :data-lang="lingua">Lingua originale :</strong>
+                            <span v-if="languagePresent(lingua)">
+                                <img :src="`./src/assets/img/${lingua}.png`" alt="" class="flag">
                             </span>
                             <span v-else> {{ lingua }}</span>
 
@@ -84,8 +85,11 @@ export default {
                 </div>
                 <div class="text_color d_flex">
                     <div class="text_color">
-                        <strong>Lingua originale :</strong> <span><img :src="ritornaParola(lingua)" alt=""
-                                class="flag"></span>
+                        <strong :data-lang="lingua">Lingua originale :</strong>
+                        <span v-if="languagePresent(lingua)">
+                            <img :src="`./src/assets/img/${lingua}.png`" alt="" class="flag">
+                        </span>
+                        <span v-else> {{ lingua }}</span>
                     </div>
                 </div>
                 <div class="text_color">

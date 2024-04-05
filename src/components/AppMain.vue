@@ -46,7 +46,7 @@ main {
     width: 80%;
     max-width: 1200px;
     margin: auto;
-
+    border: ;
     padding-top: 25px;
 
     & .row {
