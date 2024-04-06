@@ -15,7 +15,7 @@ export const state = reactive({
     filmsList: [],
     seriesList: [],
     genresFilmsList: [],
-    genresSeriesList:[],
+    genresSeriesList: [],
 
     // dichiaro il metodo callApifunction che mi permette, tramite la mia chiamata ajax di accedere alla lista dei film
     callApifunction(url) {
@@ -53,20 +53,21 @@ export const state = reactive({
         console.log("stai attivano la funzione 2");
 
         axios
-            .get('https://api.themoviedb.org/3/genre/movie/list?api_key=f816e22efeac8c7bafa0b02db3a618e3')
+            .get(`https://api.themoviedb.org/3/genre/movie/list?${this.address_my_key}`)
             .then(response => {
                 //console.log(response.data.genres)
                 this.genresFilmsList = response.data.genres
-                console.log(this.genresFilmsList)
+                //console.log(this.genresFilmsList)
             })
 
         axios
-            .get('https://api.themoviedb.org/3/genre/tv/list?api_key=f816e22efeac8c7bafa0b02db3a618e3')
+            .get(`https://api.themoviedb.org/3/genre/tv/list?${this.address_my_key}`)
             .then(response => {
                 //console.log(response.data.genres)
                 this.genresSeriesList = response.data.genres
-                console.log(this.genresSeriesList)
+                //console.log(this.genresSeriesList)
             })
-    }
+    },
+
 });
 

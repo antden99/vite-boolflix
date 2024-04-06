@@ -1,5 +1,6 @@
 <script>
 import { state } from '../state';
+import axios from 'axios';
 
 export default {
     name: "AppCard",
@@ -8,9 +9,11 @@ export default {
             state: state,
             over: false,
             languages: ["it", "en", "es", "ja"],
+            actors: [],
         }
     },
-    props: ["immagine", "titolo", "titoloOriginale", "lingua", "voto", "overview", "genre", "arrayDaControllare"],
+    props: ["immagine", "titolo", "titoloOriginale", "lingua", "voto", "overview", "genre", "arrayDaControllare", "id", "section"],
+
     methods: {
 
         languagePresent(str) {
@@ -26,10 +29,8 @@ export default {
         returnNumb(number) {
             const newNumber = number / 2;
             let intero = (Math.trunc(newNumber)); //il metodo trunc mi permette di troncare la parte decimale e prendere solo il numero intero e lo salvo in numb
-
             const decimale = newNumber - intero
             //console.log("numero originale: " + number + "numero diviso: " + newNumber + "parte intera:" + intero + "parte decimale:" + Number(decimale.toFixed(2)))
-
             if (Number(decimale.toFixed(2)) > 0.5) {
                 intero++
             } else if (number <= 0) {
@@ -38,16 +39,29 @@ export default {
 
             return intero
         },
-
         genreSearch(componente, array) {
             for (let i = 0; i < array.length; i++) {
                 if (array[i].id === componente) {
                     return array[i].name;
                 }
             }
-
+        },
+        researchActors(researchSection, identifier) {
+            axios
+                .get(`https://api.themoviedb.org/3/${researchSection}/${identifier}/credits?${state.address_my_key}`)
+                .then(response => {
+                    console.log(response.data);
+                    // Assegna i dati degli attori alla variabile 'actors'
+                    this.actors = response.data;
+                })
+                .catch(error => {
+                    console.error('Errore nella ricerca degli attori:', error);
+                    // Gestione dell'errore rigettato
+                    // Puoi aggiungere qui eventuali azioni aggiuntive in caso di rigetto della promessa
+                });
         }
-    }
+
+    },
 }
 </script>
 
@@ -85,9 +99,12 @@ export default {
                     </div>
                     <div>
                         <strong>Generi : </strong>
-                            <span v-for="componente in genre"> - {{ genreSearch(componente, arrayDaControllare) }} </span> 
-                            
-                        
+                        <span v-for="componente in genre"> - {{ genreSearch(componente, arrayDaControllare) }} </span>
+                    </div>
+                    <div>
+                        {{ section}}
+                        {{ id }}
+                        {{ researchActors(section, id) }}
                     </div>
                 </div>
             </div>
