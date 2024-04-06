@@ -14,6 +14,8 @@ export const state = reactive({
     // dichiaro una proprietà che contiene un array inizialmente vuoto e che andrò a riempire successivamente con la chiamata ajax fatta in research() 
     filmsList: [],
     seriesList: [],
+    genresFilmsList: [],
+    genresSeriesList:[],
 
     // dichiaro il metodo callApifunction che mi permette, tramite la mia chiamata ajax di accedere alla lista dei film
     callApifunction(url) {
@@ -21,8 +23,8 @@ export const state = reactive({
         return axios
             .get(url)
             .then(response => {
-                console.log(response)
-               return response.data.results;
+                //console.log(response)
+                return response.data.results;
             });
     },
 
@@ -33,17 +35,38 @@ export const state = reactive({
         // Utilizzo la promessa restituita dalla funzione callApifunction per ottenere la lista di film
         this.callApifunction(`https://api.themoviedb.org/3/search/movie?${this.address_my_key}&query=${this.searchMovie}`)
             .then(films => {
-                console.log(films)
-                this.filmsList = films;           
+                //console.log(films)
+                this.filmsList = films;
                 console.log(this.filmsList);
             });
 
         // Utilizzo la promessa restituita dalla funzione callApifunction per ottenere la lista di serie TV
         this.callApifunction(`https://api.themoviedb.org/3/search/tv?${this.address_my_key}&query=${this.searchMovie}`)
             .then(series => {
-                
+
                 this.seriesList = series;
                 console.log(this.seriesList);
             });
     },
+
+    researchGenres() {
+        console.log("stai attivano la funzione 2");
+
+        axios
+            .get('https://api.themoviedb.org/3/genre/movie/list?api_key=f816e22efeac8c7bafa0b02db3a618e3')
+            .then(response => {
+                //console.log(response.data.genres)
+                this.genresFilmsList = response.data.genres
+                console.log(this.genresFilmsList)
+            })
+
+        axios
+            .get('https://api.themoviedb.org/3/genre/tv/list?api_key=f816e22efeac8c7bafa0b02db3a618e3')
+            .then(response => {
+                //console.log(response.data.genres)
+                this.genresSeriesList = response.data.genres
+                console.log(this.genresSeriesList)
+            })
+    }
 });
+

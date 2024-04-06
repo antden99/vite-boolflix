@@ -15,6 +15,9 @@ export default {
         AppCard: AppCard,
     },
 
+    mounted(){
+        state.researchGenres()  //faccio la chiamata in mounted poichè i generi sono sempre gli stessi ed in questo modo la faccio una volta al caricamento
+    },
 
 }
 </script>
@@ -25,11 +28,11 @@ export default {
             <div class="row">
                 <AppCard v-for="film in state.filmsList" :immagine="film.poster_path" :titolo="film.title"
                     :titoloOriginale="film.original_title" :lingua="film.original_language" :voto="film.vote_average"
-                    :overview="film.overview"></AppCard>
+                    :overview="film.overview" :genre="film.genre_ids" :arrayDaControllare="state.genresFilmsList"></AppCard>
 
                 <AppCard v-for="serie in state.seriesList" :immagine="serie.poster_path" :titolo="serie.name"
                     :titoloOriginale="serie.original_name" :lingua="serie.original_language" :voto="serie.vote_average"
-                    :overview="serie.overview"></AppCard>
+                    :overview="serie.overview" :genre="serie.genre_ids" :arrayDaControllare="state.genresSeriesList"></AppCard>
             </div>
         </div>
     </main>
@@ -46,7 +49,6 @@ main {
     width: 80%;
     max-width: 1200px;
     margin: auto;
-    border: ;
     padding-top: 25px;
 
     & .row {

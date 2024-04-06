@@ -1,5 +1,4 @@
 <script>
-import { toDisplayString } from 'vue';
 import { state } from '../state';
 
 export default {
@@ -11,12 +10,12 @@ export default {
             languages: ["it", "en", "es", "ja"],
         }
     },
-    props: ["immagine", "titolo", "titoloOriginale", "lingua", "voto", "overview"],
+    props: ["immagine", "titolo", "titoloOriginale", "lingua", "voto", "overview", "genre", "arrayDaControllare"],
     methods: {
 
         languagePresent(str) {
-            console.log(str);
-            console.log(this.languages.includes(str))
+            //console.log(str);
+            //console.log(this.languages.includes(str))
             if (this.languages.includes(str)) {
                 return true;
             } else {
@@ -36,7 +35,17 @@ export default {
             } else if (number <= 0) {
                 intero = 1
             }
+
             return intero
+        },
+
+        genreSearch(componente, array) {
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].id === componente) {
+                    return array[i].name;
+                }
+            }
+
         }
     }
 }
@@ -44,18 +53,20 @@ export default {
 
 <template>
     <div class="col">
-        <div class="card" @mouseenter="over = true" @mouseout="over = false">
+        <div class="card">
 
-            <div class="info" v-if="immagine === null || over === true">
-                <div class="info">
-                    <div class="text_color">
+            <div class="info">
+                <!--se l'immagine non è presente o over è vero(perchè l'ho modificato con l'evento allora mostro le info altrimenti mostro l'imamgine)-->
+                <div class="info text_color">
+                    <div v-if="titolo === titoloOriginale">
                         <strong>Titolo :</strong> {{ titolo }}
                     </div>
-                    <div class="text_color">
-                        <strong>Titolo Originale :</strong> {{ titoloOriginale }}
+                    <div v-else>
+                        <div><strong>Titolo :</strong> {{ titolo }}</div>
+                        <div><strong>Titolo Originale :</strong> {{ titoloOriginale }}</div>
                     </div>
-                    <div class="text_color d_flex">
-                        <div class="text_color">
+                    <div class="d_flex">
+                        <div>
                             <strong :data-lang="lingua">Lingua originale :</strong>
                             <span v-if="languagePresent(lingua)">
                                 <img :src="`./src/assets/img/${lingua}.png`" alt="" class="flag">
@@ -63,19 +74,27 @@ export default {
                             <span v-else> {{ lingua }}</span>
                         </div>
                     </div>
-                    <div class="text_color">
+                    <div>
                         <strong>Voto :</strong>
                         <span class="star_color" v-for="n in returnNumb(voto)"><i class="fa fa-star"
                                 aria-hidden="true"></i></span>
                     </div>
-                    <div class="text_color">
-                        <strong>Overview :</strong> {{ overview }}
+                    <div>
+                        <strong v-if="(overview !== '')">Overview :</strong> {{ overview }}
+                        <!--se overview è una stringa vuota non lo mostro in pagina-->
+                    </div>
+                    <div>
+                        <strong>Generi : </strong>
+                            <span v-for="componente in genre"> - {{ genreSearch(componente, arrayDaControllare) }} </span> 
+                            
+                        
                     </div>
                 </div>
             </div>
 
-            <div v-else class="image">
-                <img :src="`https://image.tmdb.org/t/p/w342/${immagine}`" alt="">
+            <div class="image">
+                <img v-if="immagine !== null" :src="`https://image.tmdb.org/t/p/w342/${immagine}`" alt="">
+                <img v-else src="../assets/img/play.png" alt="">
             </div>
 
         </div>
@@ -102,6 +121,16 @@ export default {
         height: 100%;
         box-shadow: 0px 10px 15px #080708;
         font-size: 15px;
+
+        &:hover {
+            .info {
+                display: block;
+            }
+
+            .image {
+                display: none;
+            }
+        }
     }
 }
 
@@ -128,5 +157,6 @@ img {
 
 .info {
     padding: 20px;
+    display: none;
 }
 </style>
