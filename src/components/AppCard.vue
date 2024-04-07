@@ -50,18 +50,19 @@ export default {
             axios
                 .get(`https://api.themoviedb.org/3/${researchSection}/${identifier}/credits?${state.address_my_key}`)
                 .then(response => {
-                    console.log(response.data);
-                    // Assegna i dati degli attori alla variabile 'actors'
-                    this.actors = response.data;
+                    console.log(response.data.cast);
+
+                    this.actors = response.data.cast;
                 })
                 .catch(error => {
                     console.error('Errore nella ricerca degli attori:', error);
-                    // Gestione dell'errore rigettato
-                    // Puoi aggiungere qui eventuali azioni aggiuntive in caso di rigetto della promessa
                 });
         }
 
     },
+    mounted() {
+        this.researchActors(this.section, this.id);       //quando viene montato il componente, richiamo la funzione che ricerca gli attori una sola volta, in modo tale che in actors ci saranno già i nomi salvati quando mi serviranno
+    }
 }
 </script>
 
@@ -101,11 +102,15 @@ export default {
                         <strong>Generi : </strong>
                         <span v-for="componente in genre"> - {{ genreSearch(componente, arrayDaControllare) }} </span>
                     </div>
-                    <div>
-                        {{ section}}
-                        {{ id }}
-                        {{ researchActors(section, id) }}
+
+                    <div v-if="actors.length > 0"> <!--se ci sono attori allora mostro i primi 5, altrimenti non mostro nulla-->
+                        <strong>Attori : </strong>
+                        <div v-for="(actor, index) in actors ">
+                            <div v-if="(index) <= 4">{{ actor.name }}</div>
+                        </div>
                     </div>
+
+
                 </div>
             </div>
 
