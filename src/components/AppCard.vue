@@ -128,17 +128,16 @@ export default {
     max-width: 20px;
 
 }
-
 .star_color {
     color: gold;
 }
 
 .col {
-    width: calc((100% / 12) * 4 - 15px);
+    width: calc((100% / 12) * 3 - 15px);
     height: 450px;
 
     & .card {
-        background-color: #080708;
+        background-color:  #dc1a28;
         border-radius: 10px;
         height: 100%;
         box-shadow: 0px 10px 15px #080708;

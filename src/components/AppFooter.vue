@@ -81,6 +81,10 @@ footer {
         & a {
             color: white;
         }
+
+        & li{
+            list-style: none;
+        }
     }
 }
 </style>

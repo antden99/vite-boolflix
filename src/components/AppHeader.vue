@@ -33,6 +33,9 @@ header {
     height: 100px;
     display: flex;
     width:100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
 }
 .container{
     width: 80%;
@@ -45,12 +48,31 @@ header {
 
 }
 .left {
-
-    color: red;
+    color: #dc1a28;
     font-size: 50px;
 }
 
 input{
+    padding: 5px 10px;
+    background: #fff;
+    box-shadow: none;
+    width: 200px;
+    border-radius: 5px;
+    margin: 0 15px;
+}
+
+button{
+    width: 60px;
+    height: 30px;
+    border-radius: 10px;
     outline: none;
+    margin-left: 10px;
+    background-color: #dc1a28;
+    color: white;
+
+    &:hover{
+        cursor: pointer;
+        transition:  3s;
+    }
 }
 </style>

@@ -29,7 +29,7 @@ export default {
 
 <template>
     <div class="wrapper">
-        <main :style="{ height: state.filmsList.length === 0 ? '76.6vh' : '' }">       <!--aggiungo il controllo sul main recuperando la lunghezza dell'array-->
+        <main :style="{ height: state.filmsList.length === 0 ? 'calc(100vh - 200px)' : '' }">       <!--aggiungo il controllo sul main recuperando la lunghezza dell'array-->
         <div class="container">
             <div class="row">
                 <AppCard v-for="film in state.filmsList" :immagine="film.poster_path" :titolo="film.title"
@@ -55,6 +55,11 @@ export default {
 main {
     background-color: #141414;
     padding-bottom: 20px;
+    overflow-y: auto;
+    padding-top: 100px;
+    background-image: url("./src/assets/img/bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .container {
