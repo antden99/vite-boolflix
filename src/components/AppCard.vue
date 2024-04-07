@@ -1,6 +1,7 @@
 <script>
 import { state } from '../state';
 import axios from 'axios';
+import AppModale from './AppModale.vue';
 
 export default {
     name: "AppCard",
@@ -10,7 +11,12 @@ export default {
             over: false,
             languages: ["it", "en", "es", "ja"],
             actors: [],
+            modaleAperta: false,
+            contenutoModale: null,
         }
+    },
+    components: {
+        AppModale: AppModale,
     },
     props: ["immagine", "titolo", "titoloOriginale", "lingua", "voto", "overview", "genre", "arrayDaControllare", "id", "section"],
 
@@ -57,7 +63,17 @@ export default {
                 .catch(error => {
                     console.error('Errore nella ricerca degli attori:', error);
                 });
-        }
+        },
+        showProduct(card) {
+            this.modaleAperta = true;
+            console.log(this.modaleAperta);
+
+            this.contenutoModale = this.overview
+        },
+
+        closeModel() {
+            this.modaleAperta = false
+        },
 
     },
     mounted() {
@@ -69,7 +85,6 @@ export default {
 <template>
     <div class="col">
         <div class="card">
-
             <div class="info">
                 <!--se l'immagine non è presente o over è vero(perchè l'ho modificato con l'evento allora mostro le info altrimenti mostro l'imamgine)-->
                 <div class="info text_color">
@@ -95,22 +110,20 @@ export default {
                                 aria-hidden="true"></i></span>
                     </div>
                     <div>
-                        <strong v-if="(overview !== '')">Overview :</strong> {{ overview }}
-                        <!--se overview è una stringa vuota non lo mostro in pagina-->
-                    </div>
-                    <div>
                         <strong>Generi : </strong>
                         <span v-for="componente in genre"> - {{ genreSearch(componente, arrayDaControllare) }} </span>
                     </div>
 
-                    <div v-if="actors.length > 0"> <!--se ci sono attori allora mostro i primi 5, altrimenti non mostro nulla-->
+                    <div v-if="actors.length > 0">
+                        <!--se ci sono attori allora mostro i primi 5, altrimenti non mostro nulla-->
                         <strong>Attori : </strong>
                         <div v-for="(actor, index) in actors ">
                             <div v-if="(index) <= 4">{{ actor.name }}</div>
                         </div>
                     </div>
-
-
+                    <button v-if="(overview !== '')" @click="showProduct()">Overview</button>
+                    <AppModale v-if="modaleAperta === true" :story="overview" @closeModelCard="closeModel">
+                    </AppModale>
                 </div>
             </div>
 
@@ -128,6 +141,7 @@ export default {
     max-width: 20px;
 
 }
+
 .star_color {
     color: gold;
 }
@@ -137,11 +151,12 @@ export default {
     height: 450px;
 
     & .card {
-        background-color:  #dc1a28;
+        background-color: #4d4a4a;
         border-radius: 10px;
         height: 100%;
         box-shadow: 0px 10px 15px #080708;
         font-size: 15px;
+        position: relative;
 
         &:hover {
             .info {
@@ -179,5 +194,16 @@ img {
 .info {
     padding: 20px;
     display: none;
+}
+
+button {
+    background-color: white;
+    color:black;
+    margin-top: 10px;
+    border-radius: 10px;
+
+    &:hover{
+        cursor: pointer;
+    }
 }
 </style>
