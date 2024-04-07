@@ -32,6 +32,7 @@ header {
     background-color: #080708;
     height: 100px;
     display: flex;
+    width:100%;
 }
 .container{
     width: 80%;
